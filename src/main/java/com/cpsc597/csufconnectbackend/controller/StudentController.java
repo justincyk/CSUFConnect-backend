@@ -9,10 +9,7 @@ import com.cpsc597.csufconnectbackend.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -35,6 +32,20 @@ public class StudentController {
             String errorMessage = "Error while authenticating with Firebase: " + e.getMessage();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         }
+    }
 
+    @GetMapping
+    public ResponseEntity<?> getStudent(@RequestParam("id") String idToken){
+        System.out.println(idToken);
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            String uid = decodedToken.getUid();
+            StudentDto student = studentService.getStudent(uid);
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } catch (FirebaseAuthException e){
+            e.printStackTrace();
+            String errorMessage = "Error while authenticating with Firebase: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
     }
 }

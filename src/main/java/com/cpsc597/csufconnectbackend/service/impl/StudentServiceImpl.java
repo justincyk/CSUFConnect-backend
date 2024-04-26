@@ -20,4 +20,10 @@ public class StudentServiceImpl implements StudentService {
 
         return StudentMapper.mapToStudentDto((savedStudent));
     }
+
+    @Override
+    public StudentDto getStudent(String id){
+        Student student = studentRepository.getReferenceById(id);
+        return StudentMapper.mapToStudentDto(student);
+    }
 }
