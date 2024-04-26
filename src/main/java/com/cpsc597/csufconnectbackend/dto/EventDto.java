@@ -22,10 +22,11 @@ public class EventDto {
     private Location location;
     private String startDateAndTime;
     private String endDateAndTime;
-    private String image; // Change the type to String for base64-encoded image data
+    private String image;
+    private String student_id;
 
     // Constructor without image data
-    public EventDto(Long id, String name, String shortDescription, String Description, String category, Location location, String startDateAndTime, String endDateAndTime) {
+    public EventDto(Long id, String name, String shortDescription, String Description, String category, Location location, String startDateAndTime, String endDateAndTime, String student_id) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -35,6 +36,7 @@ public class EventDto {
         this.startDateAndTime = startDateAndTime;
         this.endDateAndTime = endDateAndTime;
         this.image = null;
+        this.student_id = student_id;
     }
 
     @Override
@@ -49,6 +51,7 @@ public class EventDto {
                 ", startDateAndTime='" + startDateAndTime + '\'' +
                 ", endDateAndTime='" + endDateAndTime + '\'' +
                 ", image='" + image + '\'' +
+                ", student_id='" + student_id + '\'' +
                 '}';
     }
 }

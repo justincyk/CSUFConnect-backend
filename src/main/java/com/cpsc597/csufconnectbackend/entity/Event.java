@@ -25,6 +25,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
     @Column(name = "event_name", nullable = false)
     private String name;
 
@@ -58,8 +62,9 @@ public class Event {
     @Column(name = "image", columnDefinition="bytea")
     private byte[] image;
 
-    public Event(String name, String shortDescription, String description, Category category, Location location,
+    public Event(Student student, String name, String shortDescription, String description, Category category, Location location,
                  LocalDateTime startDateAndTime, LocalDateTime endDateAndTime, MultipartFile imageFile) throws IOException {
+        this.student = student;
         this.name = name;
         this.shortDescription = shortDescription;
         this.Description = description;
@@ -70,8 +75,9 @@ public class Event {
         this.image = imageFile.getBytes();
     }
 
-    public Event(String name, String shortDescription, String description, Category category, Location location,
+    public Event(Student student, String name, String shortDescription, String description, Category category, Location location,
                  LocalDateTime startDateAndTime, LocalDateTime endDateAndTime) {
+        this.student = student;
         this.name = name;
         this.shortDescription = shortDescription;
         this.Description = description;

@@ -18,7 +18,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = StudentMapper.mapToStudent(studentDto);
         Student savedStudent = studentRepository.save(student);
 
-        return StudentMapper.mapToStudentDto((savedStudent));
+        return StudentMapper.mapToStudentDto(savedStudent);
     }
 
     @Override

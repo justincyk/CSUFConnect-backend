@@ -2,6 +2,7 @@ package com.cpsc597.csufconnectbackend.mapper;
 
 import com.cpsc597.csufconnectbackend.dto.EventDto;
 import com.cpsc597.csufconnectbackend.entity.Event;
+import com.cpsc597.csufconnectbackend.entity.Student;
 import com.cpsc597.csufconnectbackend.enumTypes.Category;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +21,8 @@ public class EventMapper {
                 event.getCategory().getValue(),
                 event.getLocation(),
                 event.getStartDateAndTime().format(DateTimeFormatter.ISO_DATE_TIME),
-                event.getEndDateAndTime().format(DateTimeFormatter.ISO_DATE_TIME)
+                event.getEndDateAndTime().format(DateTimeFormatter.ISO_DATE_TIME),
+                event.getStudent().getId()
         );
 
         // Convert byte[] image data to base64 string
@@ -31,8 +33,9 @@ public class EventMapper {
         return eventDto;
     }
 
-    public static Event mapToEvent(EventDto eventDto, MultipartFile imageFile) throws IOException {
+    public static Event mapToEvent(EventDto eventDto, Student student, MultipartFile imageFile) throws IOException {
         Event event = new Event(
+                student,
                 eventDto.getName(),
                 eventDto.getShortDescription(),
                 eventDto.getDescription(),
@@ -46,8 +49,9 @@ public class EventMapper {
         return event;
     }
 
-    public static Event mapToEvent(EventDto eventDto) {
+    public static Event mapToEvent(EventDto eventDto, Student student) {
         Event event = new Event(
+                student,
                 eventDto.getName(),
                 eventDto.getShortDescription(),
                 eventDto.getDescription(),

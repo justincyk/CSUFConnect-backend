@@ -26,6 +26,7 @@ public class StudentController {
             String uid = decodedToken.getUid();
             studentDto.setId(uid);
             StudentDto savedStudent = studentService.createStudent(studentDto);
+            savedStudent.setId(idToken);
             return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
         } catch (FirebaseAuthException e){
             e.printStackTrace();
@@ -36,11 +37,11 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<?> getStudent(@RequestParam("id") String idToken){
-        System.out.println(idToken);
         try {
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
             String uid = decodedToken.getUid();
             StudentDto student = studentService.getStudent(uid);
+            student.setId(idToken);
             return new ResponseEntity<>(student, HttpStatus.OK);
         } catch (FirebaseAuthException e){
             e.printStackTrace();

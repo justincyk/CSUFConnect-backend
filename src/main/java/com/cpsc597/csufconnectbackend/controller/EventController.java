@@ -2,9 +2,13 @@ package com.cpsc597.csufconnectbackend.controller;
 
 import com.cpsc597.csufconnectbackend.MultiPartFile.ByteArrayMultipartFile;
 import com.cpsc597.csufconnectbackend.dto.EventDto;
+import com.cpsc597.csufconnectbackend.dto.StudentDto;
 import com.cpsc597.csufconnectbackend.entity.Event;
 import com.cpsc597.csufconnectbackend.service.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,10 +36,20 @@ public class EventController {
 //    }
 
     @PostMapping
-    public ResponseEntity<EventDto> createEvent(@RequestBody EventDto eventDto) throws IOException {
-        System.out.println(eventDto.toString());
-        EventDto savedEvent = eventService.createEvent(eventDto);
-        return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
+    public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto) throws IOException {
+        try {
+            String idToken = eventDto.getStudent_id();
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            String uid = decodedToken.getUid();
+            eventDto.setStudent_id(uid);
+            EventDto savedEvent = eventService.createEvent(eventDto);
+            savedEvent.setStudent_id(idToken);
+            return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
+        } catch (FirebaseAuthException e){
+            e.printStackTrace();
+            String errorMessage = "Error while authenticating with Firebase: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
 
     }
 
