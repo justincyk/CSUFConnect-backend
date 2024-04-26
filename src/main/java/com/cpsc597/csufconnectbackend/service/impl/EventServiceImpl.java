@@ -25,4 +25,13 @@ public class EventServiceImpl implements EventService {
 
         return EventMapper.mapToEventDto(savedEvent);
     }
+
+    @Override
+    public EventDto createEvent(EventDto eventDto) throws IOException {
+        Event event = EventMapper.mapToEvent(eventDto);
+
+        Event savedEvent = eventRepository.save(event);
+
+        return EventMapper.mapToEventDto(savedEvent);
+    }
 }

@@ -45,4 +45,18 @@ public class EventMapper {
 
         return event;
     }
+
+    public static Event mapToEvent(EventDto eventDto) {
+        Event event = new Event(
+                eventDto.getName(),
+                eventDto.getShortDescription(),
+                eventDto.getDescription(),
+                Category.fromString(eventDto.getCategory()),
+                eventDto.getLocation(),
+                LocalDateTime.parse(eventDto.getStartDateAndTime(), DateTimeFormatter.ISO_DATE_TIME),
+                LocalDateTime.parse(eventDto.getEndDateAndTime(), DateTimeFormatter.ISO_DATE_TIME)
+        );
+
+        return event;
+    }
 }

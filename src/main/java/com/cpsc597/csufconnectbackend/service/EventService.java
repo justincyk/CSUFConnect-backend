@@ -6,5 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface EventService {
+    EventDto createEvent(EventDto eventDto) throws IOException;
     EventDto createEvent(EventDto eventDto, MultipartFile imageFile) throws IOException;
 }

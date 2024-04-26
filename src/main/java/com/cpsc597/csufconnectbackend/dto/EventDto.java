@@ -34,5 +34,21 @@ public class EventDto {
         this.location = location;
         this.startDateAndTime = startDateAndTime;
         this.endDateAndTime = endDateAndTime;
+        this.image = null;
+    }
+
+    @Override
+    public String toString() {
+        return "EventDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                ", location=" + location +
+                ", startDateAndTime='" + startDateAndTime + '\'' +
+                ", endDateAndTime='" + endDateAndTime + '\'' +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

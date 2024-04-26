@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.cpsc597.csufconnectbackend.enumTypes.Category;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -21,8 +22,7 @@ public class Event {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_sequence")
-    @SequenceGenerator(name = "event_sequence", sequenceName = "event_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "event_name", nullable = false)
@@ -54,8 +54,8 @@ public class Event {
     @Column(name = "end_date_and_time", nullable = false)
     private LocalDateTime endDateAndTime;
 
-    @Lob
-    @Column(name = "image", columnDefinition = "bytea", nullable = true)
+
+    @Column(name = "image", columnDefinition="bytea")
     private byte[] image;
 
     public Event(String name, String shortDescription, String description, Category category, Location location,
@@ -68,6 +68,18 @@ public class Event {
         this.startDateAndTime = startDateAndTime;
         this.endDateAndTime = endDateAndTime;
         this.image = imageFile.getBytes();
+    }
+
+    public Event(String name, String shortDescription, String description, Category category, Location location,
+                 LocalDateTime startDateAndTime, LocalDateTime endDateAndTime) {
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.Description = description;
+        this.category = category;
+        this.location = location;
+        this.startDateAndTime = startDateAndTime;
+        this.endDateAndTime = endDateAndTime;
+        this.image = null;
     }
 }
 
