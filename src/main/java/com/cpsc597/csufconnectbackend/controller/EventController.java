@@ -11,12 +11,15 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -50,8 +53,20 @@ public class EventController {
             String errorMessage = "Error while authenticating with Firebase: " + e.getMessage();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         }
-
     }
+
+    @GetMapping
+    public ResponseEntity<?> getEvent(@RequestParam("id") String id){
+        EventDto event = eventService.findEventById(id);
+        return new ResponseEntity<>(event, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EventDto>> getAllEvents(){
+        List<EventDto> events = eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
 
 
 }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -32,6 +34,22 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public EventDto findEventById(String id) {
+        Event event = eventRepository.getReferenceById(id);
+        return EventMapper.mapToEventDto(event);
+    }
+
+    @Override
+    public List<EventDto> getAllEvents() {
+        List<Event> events = eventRepository.findAll();
+        List<EventDto> eventsDto = new ArrayList<>();
+        for(Event event: events){
+            eventsDto.add(EventMapper.mapToEventDto(event));
+        }
+        return eventsDto;
+    }
+
+    @Override
     public EventDto createEvent(EventDto eventDto) throws IOException {
         String id = eventDto.getStudent_id();
         Student student = studentRepository.getReferenceById(id);
@@ -41,4 +59,5 @@ public class EventServiceImpl implements EventService {
 
         return EventMapper.mapToEventDto(savedEvent);
     }
+
 }
