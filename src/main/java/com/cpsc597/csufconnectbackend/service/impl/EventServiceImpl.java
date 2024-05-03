@@ -23,17 +23,6 @@ public class EventServiceImpl implements EventService {
     private StudentRepository studentRepository;
 
     @Override
-    public EventDto createEvent(EventDto eventDto, MultipartFile imageFile) throws IOException {
-        String id = eventDto.getStudent_id();
-        Student student = studentRepository.getReferenceById(id);
-        Event event = EventMapper.mapToEvent(eventDto, student, imageFile);
-
-        Event savedEvent = eventRepository.save(event);
-
-        return EventMapper.mapToEventDto(savedEvent);
-    }
-
-    @Override
     public EventDto findEventById(String id) {
         Event event = eventRepository.getReferenceById(id);
         return EventMapper.mapToEventDto(event);
@@ -50,7 +39,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto createEvent(EventDto eventDto) throws IOException {
+    public EventDto putImageUrl(String id, String url) {
+        Event event = eventRepository.getReferenceById(id);
+        event.setImage(url);
+        Event updatedEvent = eventRepository.save(event);
+        return EventMapper.mapToEventDto(updatedEvent);
+    }
+
+    @Override
+    public EventDto createEvent(EventDto eventDto) {
         String id = eventDto.getStudent_id();
         Student student = studentRepository.getReferenceById(id);
         Event event = EventMapper.mapToEvent(eventDto, student);

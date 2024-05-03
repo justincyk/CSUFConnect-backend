@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.List;
 
 public interface EventService {
-    EventDto createEvent(EventDto eventDto) throws IOException;
-    EventDto createEvent(EventDto eventDto, MultipartFile imageFile) throws IOException;
+    EventDto createEvent(EventDto eventDto);
     EventDto findEventById(String id);
     List<EventDto> getAllEvents();
+    EventDto putImageUrl(String id, String url);
 }

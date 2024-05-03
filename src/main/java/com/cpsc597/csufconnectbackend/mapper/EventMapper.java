@@ -22,32 +22,13 @@ public class EventMapper {
                 event.getLocation(),
                 event.getStartDateAndTime().format(DateTimeFormatter.ISO_DATE_TIME),
                 event.getEndDateAndTime().format(DateTimeFormatter.ISO_DATE_TIME),
+                event.getImage(),
                 event.getStudent().getId()
         );
-
-        // Convert byte[] image data to base64 string
-        if (event.getImage() != null) {
-            eventDto.setImage(Base64.getEncoder().encodeToString(event.getImage()));
-        }
 
         return eventDto;
     }
 
-    public static Event mapToEvent(EventDto eventDto, Student student, MultipartFile imageFile) throws IOException {
-        Event event = new Event(
-                student,
-                eventDto.getName(),
-                eventDto.getShortDescription(),
-                eventDto.getDescription(),
-                Category.fromString(eventDto.getCategory()),
-                eventDto.getLocation(),
-                LocalDateTime.parse(eventDto.getStartDateAndTime(), DateTimeFormatter.ISO_DATE_TIME),
-                LocalDateTime.parse(eventDto.getEndDateAndTime(), DateTimeFormatter.ISO_DATE_TIME),
-                imageFile
-        );
-
-        return event;
-    }
 
     public static Event mapToEvent(EventDto eventDto, Student student) {
         Event event = new Event(

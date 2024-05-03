@@ -59,11 +59,11 @@ public class Event {
     private LocalDateTime endDateAndTime;
 
 
-    @Column(name = "image", columnDefinition="bytea")
-    private byte[] image;
+    @Column(name = "image")
+    String image;
 
     public Event(Student student, String name, String shortDescription, String description, Category category, Location location,
-                 LocalDateTime startDateAndTime, LocalDateTime endDateAndTime, MultipartFile imageFile) throws IOException {
+                 LocalDateTime startDateAndTime, LocalDateTime endDateAndTime, String imageUrl) {
         this.student = student;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -72,7 +72,7 @@ public class Event {
         this.location = location;
         this.startDateAndTime = startDateAndTime;
         this.endDateAndTime = endDateAndTime;
-        this.image = imageFile.getBytes();
+        this.image = imageUrl;
     }
 
     public Event(Student student, String name, String shortDescription, String description, Category category, Location location,

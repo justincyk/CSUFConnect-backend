@@ -67,6 +67,10 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<EventDto> putImageOfEvent(@PathVariable("id") String id, @RequestBody String imageUrl){
+        EventDto eventDto = eventService.putImageUrl(id, imageUrl);
+        return new ResponseEntity<>(eventDto, HttpStatus.OK);
+    }
 
 }
