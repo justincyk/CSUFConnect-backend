@@ -23,20 +23,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4173")
 @RequestMapping("/api/event")
 public class EventController {
     private final EventService eventService;
-
-//    @PostMapping
-//    public ResponseEntity<EventDto> createEvent(@RequestPart("event") EventDto eventDto,  @RequestPart(value="image", required = false) MultipartFile imageFile) throws IOException {
-//        if (imageFile != null){
-//            EventDto savedEvent = eventService.createEvent(eventDto, imageFile);
-//            return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
-//        } else {
-//            EventDto savedEvent = eventService.createEvent(eventDto);
-//            return new ResponseEntity<>(savedEvent, HttpStatus.CREATED);
-//        }
-//    }
 
     @PostMapping
     public ResponseEntity<?> createEvent(@RequestBody EventDto eventDto) throws IOException {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:4173")
 @RequestMapping("/api/student")
 public class StudentController {
     private StudentService studentService;
